@@ -1,0 +1,6 @@
+framework module Pods_ReactorExample {
+  umbrella header "Pods-ReactorExample-umbrella.h"
+
+  export *
+  module * { export * }
+}
