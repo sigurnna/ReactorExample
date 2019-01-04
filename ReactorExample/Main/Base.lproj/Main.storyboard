@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ePU-bn-FRw">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="UQS-np-0oF">
+            <objects>
+                <navigationController id="ePU-bn-FRw" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jaZ-Gf-Dtp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7N1-80-2mn">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="2cG-sY-3WS" kind="relationship" relationship="rootViewController" id="Jah-qV-eMm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iJz-RW-GX9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-378" y="104"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="g5y-Ts-OKS">
+            <objects>
+                <tableViewController id="2cG-sY-3WS" customClass="RepositoryListTableViewController" customModule="ReactorExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="GvS-jX-R48">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="73" id="kXb-hB-s27" customClass="RepositoryCell" customModule="ReactorExample" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="73"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kXb-hB-s27" id="06m-RT-dum">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repository Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLo-kI-fXg">
+                                            <rect key="frame" x="15" y="5" width="345" height="18"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repository Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWK-Ha-lfv">
+                                            <rect key="frame" x="15" y="28" width="345" height="17.5"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Star:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXz-Iy-YbD">
+                                            <rect key="frame" x="15" y="50.5" width="345" height="17.5"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="jXz-Iy-YbD" secondAttribute="trailing" constant="15" id="2ff-aV-B0h"/>
+                                        <constraint firstItem="jXz-Iy-YbD" firstAttribute="leading" secondItem="06m-RT-dum" secondAttribute="leading" constant="15" id="6nF-ZH-bLl"/>
+                                        <constraint firstAttribute="trailing" secondItem="FWK-Ha-lfv" secondAttribute="trailing" constant="15" id="8aP-pU-YS1"/>
+                                        <constraint firstItem="FWK-Ha-lfv" firstAttribute="leading" secondItem="06m-RT-dum" secondAttribute="leading" constant="15" id="F3N-f0-PKy"/>
+                                        <constraint firstItem="FWK-Ha-lfv" firstAttribute="top" secondItem="dLo-kI-fXg" secondAttribute="bottom" constant="5" id="IH9-pq-qO7"/>
+                                        <constraint firstItem="dLo-kI-fXg" firstAttribute="top" secondItem="06m-RT-dum" secondAttribute="top" constant="5" id="Xyi-W9-T3v"/>
+                                        <constraint firstItem="jXz-Iy-YbD" firstAttribute="top" secondItem="FWK-Ha-lfv" secondAttribute="bottom" constant="5" id="f9s-aA-P9K"/>
+                                        <constraint firstItem="dLo-kI-fXg" firstAttribute="leading" secondItem="06m-RT-dum" secondAttribute="leading" constant="15" id="lpm-76-jEZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="jXz-Iy-YbD" secondAttribute="bottom" constant="4.5" id="nqz-tK-CiK"/>
+                                        <constraint firstAttribute="trailing" secondItem="dLo-kI-fXg" secondAttribute="trailing" constant="15" id="zYs-uH-T6y"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descLabel" destination="FWK-Ha-lfv" id="bLR-a3-kob"/>
+                                    <outlet property="nameLabel" destination="dLo-kI-fXg" id="gGf-rw-DEC"/>
+                                    <outlet property="starLabel" destination="jXz-Iy-YbD" id="JWj-jA-xfI"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2cG-sY-3WS" id="7uw-Zy-hmW"/>
+                            <outlet property="delegate" destination="2cG-sY-3WS" id="y5h-pE-mGj"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="HJn-yV-AHB">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="search" id="4Ig-IN-ZPG"/>
+                            <barButtonItem systemItem="organize" id="fML-Os-IJD"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cAO-Uf-weH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="412" y="104"/>
+        </scene>
+    </scenes>
+</document>
