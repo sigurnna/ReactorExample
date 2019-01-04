@@ -7,9 +7,13 @@
 //
 
 import XCTest
+import RxSwift
+import RxAlamofire
 @testable import ReactorExample
 
 class ReactorExampleTests: XCTestCase {
+    
+    let disposeBag = DisposeBag()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -19,16 +23,18 @@ class ReactorExampleTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testSearchRepositories() {
+        let expt = expectation(description: "Test Network Service")
+        
+        SearchRepositoryService
+            .requestSearch(language: "Swift")
+            .subscribe(onNext: { response in
+                print(response)
+            }, onCompleted: {
+                expt.fulfill()
+            })
+            .disposed(by: disposeBag)
+        
+        wait(for: [expt], timeout: 10.0)
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
