@@ -7,6 +7,7 @@ target 'ReactorExample' do
 
   # Pods for ReactorExample
   pod 'ReactorKit'
+  pod 'RxAlamofire'
 
   target 'ReactorExampleTests' do
     inherit! :search_paths
