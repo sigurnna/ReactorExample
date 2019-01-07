@@ -13,11 +13,6 @@ class RepositoryListReactor: Reactor {
     
     let initialState = State()
     
-    enum SupportedLanguage: String {
-        case swift = "Swift"
-        case objc = "Objective-C"
-    }
-    
     // 유저 액션.
     enum Action {
         case viewDidLoad

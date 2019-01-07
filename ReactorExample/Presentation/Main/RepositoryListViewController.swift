@@ -13,14 +13,24 @@ import RxCocoa
 
 class RepositoryListViewController: UIViewController, StoryboardView {
     
+    var disposeBag = DisposeBag()
+    
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     
-    var disposeBag = DisposeBag()
-
+    @IBAction func didSearchTapped(_ sender: UIBarButtonItem) {
+        
+    }
+    
+    @IBAction func didShowLanguageTapped(_ sender: UIBarButtonItem) {
+        let vc = SelectLanguageViewController.instance()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initial View Controller 라서, 직접 의존성을 주입함.
+        // Initial View Controller 라서 직접 의존성을 주입함.
         reactor = RepositoryListReactor()
     }
     
@@ -33,6 +43,8 @@ class RepositoryListViewController: UIViewController, StoryboardView {
                 cell.starLabel.text = String(repository.stargazers_count)
             }
             .disposed(by: disposeBag)
+        
+        
         
         // Send Action
         reactor.action.on(.next(.viewDidLoad))

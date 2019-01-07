@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="UQS-np-0oF">
@@ -88,10 +93,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uxY-5w-U1e">
+                                <rect key="frame" x="177.5" y="355.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="uxY-5w-U1e" firstAttribute="centerX" secondItem="8H4-TS-QEw" secondAttribute="centerX" id="3rV-Lh-AIR"/>
                             <constraint firstItem="8H4-TS-QEw" firstAttribute="bottom" secondItem="KKn-vN-xq3" secondAttribute="bottom" id="4j1-29-Aj2"/>
+                            <constraint firstItem="uxY-5w-U1e" firstAttribute="centerY" secondItem="8H4-TS-QEw" secondAttribute="centerY" id="F8a-E8-iuI"/>
                             <constraint firstItem="8H4-TS-QEw" firstAttribute="trailing" secondItem="KKn-vN-xq3" secondAttribute="trailing" id="bsO-fq-qXg"/>
                             <constraint firstItem="KKn-vN-xq3" firstAttribute="leading" secondItem="8H4-TS-QEw" secondAttribute="leading" id="jLT-qO-n1o"/>
                             <constraint firstItem="KKn-vN-xq3" firstAttribute="top" secondItem="8H4-TS-QEw" secondAttribute="top" id="oNK-JO-oLT"/>
@@ -100,11 +110,20 @@
                     </view>
                     <navigationItem key="navigationItem" title="Root View Controller" id="SSc-1T-f7s">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="search" id="A8O-AF-dh1"/>
-                            <barButtonItem systemItem="organize" id="S5h-6N-S8F"/>
+                            <barButtonItem systemItem="search" id="A8O-AF-dh1">
+                                <connections>
+                                    <action selector="didSearchTapped:" destination="2v0-ar-QOL" id="fft-tI-7Pn"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="organize" id="S5h-6N-S8F">
+                                <connections>
+                                    <action selector="didShowLanguageTapped:" destination="2v0-ar-QOL" id="WOw-Eb-XoU"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="indicator" destination="uxY-5w-U1e" id="V3F-Tc-dam"/>
                         <outlet property="tableView" destination="KKn-vN-xq3" id="0h7-wz-iKg"/>
                     </connections>
                 </viewController>

@@ -10,6 +10,11 @@
 		492B2BFFB8FE7AA679BBAB3F /* Pods_ReactorExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74C9FC7B4CEE39E1E7A092D /* Pods_ReactorExampleTests.framework */; };
 		6360B31521DDA5AD000AFCBF /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6360B31421DDA5AD000AFCBF /* RepositoryCell.swift */; };
 		6360B31721DDA690000AFCBF /* RepositoryListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6360B31621DDA690000AFCBF /* RepositoryListReactor.swift */; };
+		63811FE221E311A60057D0BD /* SelectLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63811FE121E311A60057D0BD /* SelectLanguageViewController.swift */; };
+		63811FE421E311B60057D0BD /* SelectLanguage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63811FE321E311B60057D0BD /* SelectLanguage.storyboard */; };
+		63811FE821E3258C0057D0BD /* GlobalDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63811FE721E3258C0057D0BD /* GlobalDefines.swift */; };
+		63811FEA21E330D90057D0BD /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63811FE921E330D90057D0BD /* ViewControllerProtocol.swift */; };
+		63811FEC21E3416F0057D0BD /* GlobalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63811FEB21E3416F0057D0BD /* GlobalNotifications.swift */; };
 		6385AE6121DCA38A001643EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6385AE6021DCA38A001643EE /* AppDelegate.swift */; };
 		6385AE6621DCA38A001643EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6385AE6421DCA38A001643EE /* Main.storyboard */; };
 		6385AE6821DCA38F001643EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6385AE6721DCA38F001643EE /* Assets.xcassets */; };
@@ -39,6 +44,11 @@
 		630FEAC721DEFCF400D92BA4 /* ReactorExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ReactorExample.entitlements; sourceTree = "<group>"; };
 		6360B31421DDA5AD000AFCBF /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
 		6360B31621DDA690000AFCBF /* RepositoryListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListReactor.swift; sourceTree = "<group>"; };
+		63811FE121E311A60057D0BD /* SelectLanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageViewController.swift; sourceTree = "<group>"; };
+		63811FE321E311B60057D0BD /* SelectLanguage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectLanguage.storyboard; sourceTree = "<group>"; };
+		63811FE721E3258C0057D0BD /* GlobalDefines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefines.swift; sourceTree = "<group>"; };
+		63811FE921E330D90057D0BD /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
+		63811FEB21E3416F0057D0BD /* GlobalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotifications.swift; sourceTree = "<group>"; };
 		6385AE5D21DCA38A001643EE /* ReactorExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactorExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6385AE6021DCA38A001643EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6385AE6521DCA38A001643EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -111,6 +121,24 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		63811FDF21E311680057D0BD /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				6360B31221DD90F7000AFCBF /* Main */,
+				63811FE021E311770057D0BD /* SelectLanguage */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		63811FE021E311770057D0BD /* SelectLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				63811FE121E311A60057D0BD /* SelectLanguageViewController.swift */,
+				63811FE321E311B60057D0BD /* SelectLanguage.storyboard */,
+			);
+			path = SelectLanguage;
+			sourceTree = "<group>";
+		};
 		6385AE5421DCA38A001643EE = {
 			isa = PBXGroup;
 			children = (
@@ -136,7 +164,7 @@
 			children = (
 				63D33C4721E2E167009317AA /* Common */,
 				63995D3421DEE3FF001AAD17 /* Network */,
-				6360B31221DD90F7000AFCBF /* Main */,
+				63811FDF21E311680057D0BD /* Presentation */,
 				6385AE6021DCA38A001643EE /* AppDelegate.swift */,
 				6385AE6721DCA38F001643EE /* Assets.xcassets */,
 				6385AE6921DCA38F001643EE /* LaunchScreen.storyboard */,
@@ -178,6 +206,9 @@
 			isa = PBXGroup;
 			children = (
 				63D33C4821E2E181009317AA /* GlobalExtensions.swift */,
+				63811FE721E3258C0057D0BD /* GlobalDefines.swift */,
+				63811FEB21E3416F0057D0BD /* GlobalNotifications.swift */,
+				63811FE921E330D90057D0BD /* ViewControllerProtocol.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -283,6 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63811FE421E311B60057D0BD /* SelectLanguage.storyboard in Resources */,
 				6385AE6B21DCA38F001643EE /* LaunchScreen.storyboard in Resources */,
 				6385AE6821DCA38F001643EE /* Assets.xcassets in Resources */,
 				6385AE6621DCA38A001643EE /* Main.storyboard in Resources */,
@@ -370,15 +402,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63811FEA21E330D90057D0BD /* ViewControllerProtocol.swift in Sources */,
 				63D33C4B21E2E593009317AA /* RepositoryListViewController.swift in Sources */,
 				63995D3721DEE553001AAD17 /* NetworkService.swift in Sources */,
 				6360B31521DDA5AD000AFCBF /* RepositoryCell.swift in Sources */,
 				6360B31721DDA690000AFCBF /* RepositoryListReactor.swift in Sources */,
 				6385AE6121DCA38A001643EE /* AppDelegate.swift in Sources */,
+				63811FE821E3258C0057D0BD /* GlobalDefines.swift in Sources */,
 				63995D3D21DEF4D8001AAD17 /* SearchRepositoryService.swift in Sources */,
+				63811FE221E311A60057D0BD /* SelectLanguageViewController.swift in Sources */,
 				63D33C4921E2E181009317AA /* GlobalExtensions.swift in Sources */,
 				63995D3F21DEF739001AAD17 /* SearchRepositoryResponse.swift in Sources */,
 				63995D3921DEE768001AAD17 /* NetworkResponse.swift in Sources */,
+				63811FEC21E3416F0057D0BD /* GlobalNotifications.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
