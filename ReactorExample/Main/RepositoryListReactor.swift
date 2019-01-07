@@ -13,26 +13,43 @@ class RepositoryListReactor: Reactor {
     
     let initialState = State()
     
+    enum SupportedLanguage: String {
+        case swift = "Swift"
+    }
+    
     // 유저 액션.
     enum Action {
-        
+        case viewDidLoad
     }
     
     // 상태 변경.
     enum Mutation {
-        
+        case appendRepositories(RepositoryResponse)
     }
     
     // 뷰의 상태.
     struct State {
-        
+        var language = SupportedLanguage.swift
+        var repositories = [RepositoryResponse]()
     }
     
-//    func mutate(action: RepositoryListReactor.Action) -> Observable<RepositoryListReactor.Mutation> {
-//        
-//    }
-//    
-//    func reduce(state: RepositoryListReactor.State, mutation: RepositoryListReactor.Mutation) -> RepositoryListReactor.State {
-//        
-//    }
+    func mutate(action: RepositoryListReactor.Action) -> Observable<RepositoryListReactor.Mutation> {
+        switch action {
+        case .viewDidLoad:
+            return SearchRepositoryService.requestSearch(language: SupportedLanguage.swift.rawValue)
+                .map { (repository) -> Mutation in
+                    return Mutation.appendRepositories(repository)
+                }
+        }
+    }
+    
+    func reduce(state: RepositoryListReactor.State, mutation: RepositoryListReactor.Mutation) -> RepositoryListReactor.State {
+        var state = state
+        
+        switch mutation {
+        case let .appendRepositories(repository):
+            state.repositories.append(repository)
+            return state
+        }
+    }
 }
