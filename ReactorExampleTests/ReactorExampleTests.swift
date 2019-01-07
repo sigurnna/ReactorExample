@@ -29,7 +29,16 @@ class ReactorExampleTests: XCTestCase {
         SearchRepositoryService
             .requestSearch(language: "Swift")
             .subscribe(onNext: { response in
-                print(response)
+                XCTAssertNotNil(response)
+                XCTAssertNotNil(response.full_name)
+                XCTAssertNotNil(response.description)
+                XCTAssertNotNil(response.stargazers_count)
+                
+                print(response.full_name)
+                print(response.description)
+                print(response.stargazers_count)
+                print("======================================================")
+                
             }, onCompleted: {
                 expt.fulfill()
             })

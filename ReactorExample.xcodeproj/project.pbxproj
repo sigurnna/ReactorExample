@@ -11,7 +11,6 @@
 		6360B31521DDA5AD000AFCBF /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6360B31421DDA5AD000AFCBF /* RepositoryCell.swift */; };
 		6360B31721DDA690000AFCBF /* RepositoryListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6360B31621DDA690000AFCBF /* RepositoryListReactor.swift */; };
 		6385AE6121DCA38A001643EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6385AE6021DCA38A001643EE /* AppDelegate.swift */; };
-		6385AE6321DCA38A001643EE /* RepositoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6385AE6221DCA38A001643EE /* RepositoryListTableViewController.swift */; };
 		6385AE6621DCA38A001643EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6385AE6421DCA38A001643EE /* Main.storyboard */; };
 		6385AE6821DCA38F001643EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6385AE6721DCA38F001643EE /* Assets.xcassets */; };
 		6385AE6B21DCA38F001643EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6385AE6921DCA38F001643EE /* LaunchScreen.storyboard */; };
@@ -21,6 +20,7 @@
 		63995D3D21DEF4D8001AAD17 /* SearchRepositoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63995D3C21DEF4D8001AAD17 /* SearchRepositoryService.swift */; };
 		63995D3F21DEF739001AAD17 /* SearchRepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63995D3E21DEF739001AAD17 /* SearchRepositoryResponse.swift */; };
 		63D33C4921E2E181009317AA /* GlobalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D33C4821E2E181009317AA /* GlobalExtensions.swift */; };
+		63D33C4B21E2E593009317AA /* RepositoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D33C4A21E2E593009317AA /* RepositoryListViewController.swift */; };
 		E7757D00357F5AE8CA0F8E1A /* Pods_ReactorExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6F0604CAA96DC0FE386FA9E /* Pods_ReactorExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +41,6 @@
 		6360B31621DDA690000AFCBF /* RepositoryListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListReactor.swift; sourceTree = "<group>"; };
 		6385AE5D21DCA38A001643EE /* ReactorExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactorExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6385AE6021DCA38A001643EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6385AE6221DCA38A001643EE /* RepositoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListTableViewController.swift; sourceTree = "<group>"; };
 		6385AE6521DCA38A001643EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6385AE6721DCA38F001643EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6385AE6A21DCA38F001643EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,6 +53,7 @@
 		63995D3C21DEF4D8001AAD17 /* SearchRepositoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryService.swift; sourceTree = "<group>"; };
 		63995D3E21DEF739001AAD17 /* SearchRepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryResponse.swift; sourceTree = "<group>"; };
 		63D33C4821E2E181009317AA /* GlobalExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalExtensions.swift; sourceTree = "<group>"; };
+		63D33C4A21E2E593009317AA /* RepositoryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListViewController.swift; sourceTree = "<group>"; };
 		69905C8644DA3B82753A8102 /* Pods-ReactorExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactorExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactorExampleTests/Pods-ReactorExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8EA92FFB9FD10AC4DFE46174 /* Pods-ReactorExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactorExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactorExample/Pods-ReactorExample.release.xcconfig"; sourceTree = "<group>"; };
 		A74C9FC7B4CEE39E1E7A092D /* Pods_ReactorExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactorExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				6360B31321DDA588000AFCBF /* Cell */,
-				6385AE6221DCA38A001643EE /* RepositoryListTableViewController.swift */,
+				63D33C4A21E2E593009317AA /* RepositoryListViewController.swift */,
 				6360B31621DDA690000AFCBF /* RepositoryListReactor.swift */,
 				6385AE6421DCA38A001643EE /* Main.storyboard */,
 			);
@@ -370,9 +370,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63D33C4B21E2E593009317AA /* RepositoryListViewController.swift in Sources */,
 				63995D3721DEE553001AAD17 /* NetworkService.swift in Sources */,
 				6360B31521DDA5AD000AFCBF /* RepositoryCell.swift in Sources */,
-				6385AE6321DCA38A001643EE /* RepositoryListTableViewController.swift in Sources */,
 				6360B31721DDA690000AFCBF /* RepositoryListReactor.swift in Sources */,
 				6385AE6121DCA38A001643EE /* AppDelegate.swift in Sources */,
 				63995D3D21DEF4D8001AAD17 /* SearchRepositoryService.swift in Sources */,

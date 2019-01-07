@@ -22,6 +22,7 @@ class NetworkService {
         }
         
         return RxAlamofire.request(method, url)
+            .debug()
             .validate(statusCode: 200 ..< 300)
             .responseJSON()
             .map { $0.data }

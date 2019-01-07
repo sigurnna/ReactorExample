@@ -11,7 +11,9 @@ import ReactorKit
 import RxSwift
 import RxCocoa
 
-class RepositoryListTableViewController: UITableViewController, StoryboardView {
+class RepositoryListViewController: UIViewController, StoryboardView {
+    
+    @IBOutlet weak var tableView: UITableView!
     
     var disposeBag = DisposeBag()
 
@@ -19,8 +21,7 @@ class RepositoryListTableViewController: UITableViewController, StoryboardView {
         super.viewDidLoad()
         
         // Initial View Controller 라서, 직접 의존성을 주입함.
-        self.reactor = RepositoryListReactor()
-        self.reactor?.action.on(.next(.viewDidLoad))
+        reactor = RepositoryListReactor()
     }
     
     func bind(reactor: RepositoryListReactor) {
@@ -32,6 +33,8 @@ class RepositoryListTableViewController: UITableViewController, StoryboardView {
                 cell.starLabel.text = String(repository.stargazers_count)
             }
             .disposed(by: disposeBag)
+        
+        // Send Action
+        reactor.action.on(.next(.viewDidLoad))
     }
 }
-
