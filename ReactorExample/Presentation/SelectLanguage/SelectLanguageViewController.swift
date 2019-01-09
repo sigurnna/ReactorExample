@@ -25,6 +25,7 @@ class SelectLanguageViewController: UIViewController {
     func setupBinds() {
         // Languages
         Observable.from(SupportedLanguage.list)
+            .debug()
             .bind(to: tableView.rx.items(cellIdentifier: "LanguageCell")) { indexPath, language, cell in
                 cell.textLabel?.text = language
             }
@@ -32,10 +33,13 @@ class SelectLanguageViewController: UIViewController {
         
         // Language Selected
         tableView.rx.itemSelected
+            .debug()
             .subscribe(onNext: { [weak self] indexPath in
-                NotificationCenter.default.post(name: languageSelected, object: self)
-                
-                self?.navigationController?.popViewController(animated: true)
+                if let selectedLanguage = self?.tableView.cellForRow(at: indexPath)?.textLabel?.text {
+                    NotificationCenter.default.post(name: languageSelected, object: nil, userInfo: ["language": selectedLanguage])
+                    
+                    self?.navigationController?.popViewController(animated: true)
+                }
             })
             .disposed(by: disposeBag)
     }

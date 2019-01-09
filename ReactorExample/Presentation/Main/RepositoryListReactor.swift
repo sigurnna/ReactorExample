@@ -15,13 +15,14 @@ class RepositoryListReactor: Reactor {
     
     // 유저 액션.
     enum Action {
-        case viewDidLoad
-        // case changeLangauge(SupportedLanguage)
+        case loadRepositories(SupportedLanguage)
+        case changeLangauge(SupportedLanguage)
     }
     
     // 상태 변경.
     enum Mutation {
-        case appendRepositories(RepositoryResponse)
+        case setRepositories(RepositoryResponse)
+        case setLanguage(SupportedLanguage)
     }
     
     // 뷰의 상태.
@@ -32,11 +33,14 @@ class RepositoryListReactor: Reactor {
     
     func mutate(action: RepositoryListReactor.Action) -> Observable<RepositoryListReactor.Mutation> {
         switch action {
-        case .viewDidLoad:
-            return SearchRepositoryService.requestSearch(language: SupportedLanguage.swift.rawValue)
+        case let .loadRepositories(language):
+            return SearchRepositoryService.requestSearch(language: language.rawValue)
                 .map { (repository) -> Mutation in
-                    return Mutation.appendRepositories(repository)
+                    return Mutation.setRepositories(repository)
                 }
+            
+        case let .changeLangauge(language):
+            return Observable.just(Mutation.setLanguage(language))
         }
     }
     
@@ -44,9 +48,14 @@ class RepositoryListReactor: Reactor {
         var state = state
         
         switch mutation {
-        case let .appendRepositories(repository):
+        case let .setRepositories(repository):
             state.repositories.append(repository)
-            return state
+        
+        case let .setLanguage(language):
+            state.repositories.removeAll()
+            state.language = language
         }
+        
+        return state
     }
 }
