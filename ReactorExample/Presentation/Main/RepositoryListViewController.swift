@@ -45,25 +45,37 @@ class RepositoryListViewController: UIViewController, StoryboardView {
             }
             .disposed(by: disposeBag)
         
-        // State: Language
-        reactor.state.map { $0.language }
+        // State
+        reactor.state
             .debug("Language Observable", trimOutput: true)
             .subscribeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] language in
-                self?.title = language.rawValue
+            .subscribe(onNext: { [weak self] state in
+                self?.title = state.language.rawValue
+                
+                if !(state.repositories.isEmpty) {
+                    self?.indicator.stopAnimating()
+                }
             })
             .disposed(by: disposeBag)
         
+        let languageChangedObservable = self.languageChangedObservable()
+        
         // Action: 언어가 변경되면 Change Language Action 전송.
-        languageChangedObservable()
+        languageChangedObservable
             .map { Reactor.Action.changeLangauge($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         // Action: 언어가 변경되면 Repository Action 전송.
-        languageChangedObservable()
+        languageChangedObservable
             .map { Reactor.Action.loadRepositories($0) }
             .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        languageChangedObservable
+            .subscribe(onNext: { [weak self] _ in
+                self?.indicator.startAnimating()
+            })
             .disposed(by: disposeBag)
         
         // Send Action
@@ -77,7 +89,7 @@ fileprivate extension RepositoryListViewController {
     /// 언어 변경 notification을 받을 경우 변경된 언어를 방출하는 Observable.
     func languageChangedObservable() -> Observable<SupportedLanguage> {
         return NotificationCenter.default.rx.notification(languageSelected)
-            .debug("Notification Observable", trimOutput: true)
+            .debug("Language Changed Notification Observable", trimOutput: true)
             .flatMap { notification -> Observable<SupportedLanguage> in
                 if let userInfo = notification.userInfo as? [String: Any] {
                     if let language = userInfo["language"] as? String, let supportedLanguage = SupportedLanguage(rawValue: language) {
