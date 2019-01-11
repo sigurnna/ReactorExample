@@ -13,18 +13,25 @@ import Alamofire
 class NetworkService {
     static let shared = NetworkService()
     
+    fileprivate let baseURL = "https://api.github.com/"
+    fileprivate let disposeBag = DisposeBag()
+    
+    let response = PublishSubject<Data?>()
+    
     // Cannot use init.
     private init() { }
     
-    func request(method: HTTPMethod, url: String) -> Observable<Data?> {
-        guard let url = URL(string: url) else {
+    func request(method: HTTPMethod, path: String) {
+        guard let url = URL(string: baseURL + path) else {
             fatalError("URL is not valid")
         }
         
-        return RxAlamofire.request(method, url)
+        RxAlamofire.request(method, url)
             .debug()
             .validate(statusCode: 200 ..< 300)
             .responseJSON()
-            .map { $0.data }
+            .flatMapLatest { Observable.just($0.data) }
+            .bind(to: response)
+            .disposed(by: disposeBag)
     }
 }
