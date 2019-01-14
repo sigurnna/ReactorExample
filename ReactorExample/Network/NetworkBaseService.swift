@@ -10,28 +10,25 @@ import RxSwift
 import RxAlamofire
 import Alamofire
 
-class NetworkService {
-    static let shared = NetworkService()
+class NetworkBaseService {
+    static let shared = NetworkBaseService()
     
     fileprivate let baseURL = "https://api.github.com/"
-    fileprivate let disposeBag = DisposeBag()
-    
-    let response = PublishSubject<Data?>()
     
     // Cannot use init.
     private init() { }
     
-    func request(method: HTTPMethod, path: String) {
+    func request(method: HTTPMethod, path: String) -> Observable<Data?> {
         guard let url = URL(string: baseURL + path) else {
             fatalError("URL is not valid")
         }
         
-        RxAlamofire.request(method, url)
-            .debug()
+        return RxAlamofire.request(method, url)
+            .debug("NetworkBaseService")
             .validate(statusCode: 200 ..< 300)
             .responseJSON()
-            .flatMapLatest { Observable.just($0.data) }
-            .bind(to: response)
-            .disposed(by: disposeBag)
+            .flatMap {
+                Observable.just($0.data)
+            }
     }
 }

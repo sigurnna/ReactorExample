@@ -11,29 +11,26 @@ import RxSwift
 
 /// Repository 검색 요청.
 class SearchRepositoryService {
-    private init() { }
+    
+    let disposeBag = DisposeBag()
+    let response = BehaviorSubject<[RepositoryResponse]>(value: [])
     
     /// Language로 Repository 검색.
-    static func requestSearch(language: String) -> Observable<[RepositoryResponse]> {
-        let path = "search/repositories?q=language:\(language)&sort=stars"
-        
-        return requestSearch(path: path)
+    func requestSearch(language: String) {
+        self.requestSearch(path: "search/repositories?q=language:\(language)&sort=stars")
     }
     
-    static func requestSearch(repositoryName: String) -> Observable<[RepositoryResponse]> {
-        let path = "search/repositories?q=\(repositoryName)"
-        
-        return requestSearch(path: path)
+    func requestSearch(repositoryName: String) {
+        self.requestSearch(path: "search/repositories?q=\(repositoryName)")
     }
 }
 
 // MARK: - Internal
 fileprivate extension SearchRepositoryService {
     
-    static func requestSearch(path: String) -> Observable<[RepositoryResponse]> {
-        NetworkService.shared.request(method: .get, path: path)
-        
-        return NetworkService.shared.response
+    func requestSearch(path: String) {
+        NetworkBaseService.shared.request(method: .get, path: path)
+            .debug("SearchRepositoryService:requestSearch")
             .map { data -> SearchRepositoryResponse? in
                 guard let data = data else {
                     return nil
@@ -45,12 +42,14 @@ fileprivate extension SearchRepositoryService {
                 
                 return searchRepository
             }
-            .flatMap { searchRepository -> Observable<[RepositoryResponse]> in
+            .flatMapLatest { searchRepository -> Observable<[RepositoryResponse]> in
                 guard let searchRepository = searchRepository else {
                     return Observable.just([])
                 }
                 
                 return Observable.just(searchRepository.items)
             }
+            .bind(to: self.response)
+            .disposed(by: self.disposeBag)
     }
 }

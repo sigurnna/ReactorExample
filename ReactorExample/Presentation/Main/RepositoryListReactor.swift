@@ -12,6 +12,7 @@ import RxSwift
 class RepositoryListReactor: Reactor {
     
     let initialState = State()
+    let service = SearchRepositoryService()
     
     // 유저 액션.
     enum Action {
@@ -21,7 +22,7 @@ class RepositoryListReactor: Reactor {
     
     // 상태 변경.
     enum Mutation {
-        case setRepositories(RepositoryResponse)
+        case setRepositories([RepositoryResponse])
         case setLanguage(SupportedLanguage)
     }
     
@@ -34,9 +35,11 @@ class RepositoryListReactor: Reactor {
     func mutate(action: RepositoryListReactor.Action) -> Observable<RepositoryListReactor.Mutation> {
         switch action {
         case let .loadRepositories(language):
-            return SearchRepositoryService.requestSearch(language: language.rawValue)
-                .map { (repository) -> Mutation in
-                    return Mutation.setRepositories(repository)
+            service.requestSearch(language: language.rawValue)
+            
+            return service.response
+                .map { (repositories) -> Mutation in
+                    return Mutation.setRepositories(repositories)
                 }
             
         case let .changeLangauge(language):
@@ -48,8 +51,8 @@ class RepositoryListReactor: Reactor {
         var state = state
         
         switch mutation {
-        case let .setRepositories(repository):
-            state.repositories.append(repository)
+        case let .setRepositories(repositories):
+            state.repositories = repositories
         
         case let .setLanguage(language):
             state.repositories.removeAll()

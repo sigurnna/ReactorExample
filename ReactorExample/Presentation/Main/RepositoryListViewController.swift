@@ -19,7 +19,8 @@ class RepositoryListViewController: UIViewController, StoryboardView {
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func didSearchTapped(_ sender: UIBarButtonItem) {
-        
+        let vc = RepositorySearchViewController.instance()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func didShowLanguageTapped(_ sender: UIBarButtonItem) {

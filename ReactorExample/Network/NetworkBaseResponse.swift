@@ -6,6 +6,6 @@
 //  Copyright © 2019 seungjun. All rights reserved.
 //
 
-protocol NetworkResponse: Codable {
+protocol NetworkBaseResponse: Codable {
     
 }
