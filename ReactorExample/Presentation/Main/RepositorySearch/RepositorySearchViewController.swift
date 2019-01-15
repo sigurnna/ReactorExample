@@ -13,10 +13,6 @@ import RxCocoa
 class RepositorySearchViewController: UIViewController {
     
     let disposeBag = DisposeBag()
-    let service = SearchRepositoryService()
-    
-    // Observables
-    
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -44,24 +40,16 @@ fileprivate extension RepositorySearchViewController {
                 weakSelf.tableView.delegate = nil
                 
                 // Repository Search
-                weakSelf.service.requestSearch(repositoryName: text)
+                SearchRepositoryService.shared.requestSearch(repositoryName: text)
                 
                 // Search Results Bind To TableView
-                weakSelf.service.response
+                SearchRepositoryService.shared.response
                     .debug()
                     .bind(to: weakSelf.tableView.rx.items(cellIdentifier: "SearchResultCell", cellType: UITableViewCell.self)) { indexPath, repository, cell in
                         cell.textLabel?.text = repository.full_name
                         cell.detailTextLabel?.text = repository.description
                     }
                     .disposed(by: weakSelf.disposeBag)
-            })
-            .disposed(by: disposeBag)
-        
-        // Test
-        service.response
-            .subscribe(onNext: { response in
-                print("onNext\n")
-                print(response)
             })
             .disposed(by: disposeBag)
     }

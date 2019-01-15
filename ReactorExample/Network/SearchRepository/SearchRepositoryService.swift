@@ -11,6 +11,9 @@ import RxSwift
 
 /// Repository 검색 요청.
 class SearchRepositoryService {
+    static let shared = SearchRepositoryService()
+    
+    private init() { }
     
     var response = Observable<[RepositoryResponse]>.just([])
     
@@ -19,6 +22,7 @@ class SearchRepositoryService {
         self.requestSearch(path: "search/repositories?q=language:\(language)&sort=stars")
     }
     
+    /// Repository Name으로 Repository 검색.
     func requestSearch(repositoryName: String) {
         self.requestSearch(path: "search/repositories?q=\(repositoryName)")
     }

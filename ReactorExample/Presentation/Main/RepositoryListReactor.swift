@@ -12,7 +12,6 @@ import RxSwift
 class RepositoryListReactor: Reactor {
     
     let initialState = State()
-    let service = SearchRepositoryService()
     
     // 유저 액션.
     enum Action {
@@ -35,9 +34,9 @@ class RepositoryListReactor: Reactor {
     func mutate(action: RepositoryListReactor.Action) -> Observable<RepositoryListReactor.Mutation> {
         switch action {
         case let .loadRepositories(language):
-            service.requestSearch(language: language.rawValue)
+            SearchRepositoryService.shared.requestSearch(language: language.rawValue)
             
-            return service.response
+            return SearchRepositoryService.shared.response
                 .map { (repositories) -> Mutation in
                     return Mutation.setRepositories(repositories)
                 }
