@@ -14,6 +14,6 @@ struct SearchRepositoryResponse: NetworkBaseResponse {
 
 struct RepositoryResponse: NetworkBaseResponse {
     var full_name: String
-    var description: String
+    var description: String?
     var stargazers_count: Int
 }

@@ -15,6 +15,9 @@ class RepositorySearchViewController: UIViewController {
     let disposeBag = DisposeBag()
     let service = SearchRepositoryService()
     
+    // Observables
+    
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
 
@@ -29,33 +32,37 @@ class RepositorySearchViewController: UIViewController {
 fileprivate extension RepositorySearchViewController {
     
     func setupBinds() {
-        
-        tableView.delegate = nil
-        tableView.dataSource = nil
-        
+
         // Search Bind.
         searchBar.rx.text
             .flatMap { Observable.from(optional: $0) }
             .filter { !$0.isEmpty }
             .subscribe(onNext: { [weak self] text in
+                guard let weakSelf = self else { return }
+                
+                weakSelf.tableView.dataSource = nil
+                weakSelf.tableView.delegate = nil
+                
                 // Repository Search
-                self?.service.requestSearch(repositoryName: text)
+                weakSelf.service.requestSearch(repositoryName: text)
+                
+                // Search Results Bind To TableView
+                weakSelf.service.response
+                    .debug()
+                    .bind(to: weakSelf.tableView.rx.items(cellIdentifier: "SearchResultCell", cellType: UITableViewCell.self)) { indexPath, repository, cell in
+                        cell.textLabel?.text = repository.full_name
+                        cell.detailTextLabel?.text = repository.description
+                    }
+                    .disposed(by: weakSelf.disposeBag)
             })
             .disposed(by: disposeBag)
         
-        // Search Results Bind.
+        // Test
         service.response
-            .do(onNext: { _ in
-                print("onNext")
-            }, onSubscribe: { [weak self] in
-//                self?.tableView.dataSource = nil
-//                self?.tableView.delegate = nil
-                print("onSubscribe")
+            .subscribe(onNext: { response in
+                print("onNext\n")
+                print(response)
             })
-            .bind(to: tableView.rx.items(cellIdentifier: "SearchResultCell", cellType: UITableViewCell.self)) { indexPath, repository, cell in
-                cell.textLabel?.text = repository.full_name
-                cell.detailTextLabel?.text = repository.description
-            }
             .disposed(by: disposeBag)
     }
 }

@@ -12,8 +12,7 @@ import RxSwift
 /// Repository 검색 요청.
 class SearchRepositoryService {
     
-    let disposeBag = DisposeBag()
-    let response = BehaviorSubject<[RepositoryResponse]>(value: [])
+    var response = Observable<[RepositoryResponse]>.just([])
     
     /// Language로 Repository 검색.
     func requestSearch(language: String) {
@@ -30,26 +29,23 @@ fileprivate extension SearchRepositoryService {
     
     func requestSearch(path: String) {
         NetworkBaseService.shared.request(method: .get, path: path)
+        
+        self.response = NetworkBaseService.shared.response
             .debug("SearchRepositoryService:requestSearch")
             .map { data -> SearchRepositoryResponse? in
-                guard let data = data else {
+                do {
+                    return try JSONDecoder().decode(SearchRepositoryResponse.self, from: data)
+                } catch let error {
+                    print(error)
                     return nil
                 }
-                
-                guard let searchRepository = try? JSONDecoder().decode(SearchRepositoryResponse.self, from: data) else {
-                    return nil
-                }
-                
-                return searchRepository
             }
-            .flatMapLatest { searchRepository -> Observable<[RepositoryResponse]> in
+            .flatMapLatest { searchRepository -> Observable<[RepositoryResponse]> in // 이전 Observable을 unsubscribe 처리함.
                 guard let searchRepository = searchRepository else {
                     return Observable.just([])
                 }
                 
                 return Observable.just(searchRepository.items)
             }
-            .bind(to: self.response)
-            .disposed(by: self.disposeBag)
     }
 }
