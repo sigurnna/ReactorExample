@@ -69,6 +69,7 @@
                     <connections>
                         <outlet property="searchBar" destination="Zj5-yu-fHc" id="jWB-8A-m7L"/>
                         <outlet property="tableView" destination="7cz-uv-4RL" id="9NM-Ft-LZk"/>
+                        <outlet property="tableViewBottomConstraint" destination="JUn-XE-etS" id="bBA-22-ANf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mVo-PX-izt" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -34,9 +34,7 @@ class RepositoryListReactor: Reactor {
     func mutate(action: RepositoryListReactor.Action) -> Observable<RepositoryListReactor.Mutation> {
         switch action {
         case let .loadRepositories(language):
-            SearchRepositoryService.shared.requestSearch(language: language.rawValue)
-            
-            return SearchRepositoryService.shared.response
+            return SearchRepositoryService.shared.requestSearch(language: language.rawValue)
                 .map { (repositories) -> Mutation in
                     return Mutation.setRepositories(repositories)
                 }

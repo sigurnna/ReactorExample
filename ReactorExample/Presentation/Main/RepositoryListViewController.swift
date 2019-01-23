@@ -36,6 +36,7 @@ class RepositoryListViewController: UIViewController, StoryboardView {
     }
     
     func bind(reactor: RepositoryListReactor) {
+        
         // State: Repository
         reactor.state.map { $0.repositories }
             .debug()

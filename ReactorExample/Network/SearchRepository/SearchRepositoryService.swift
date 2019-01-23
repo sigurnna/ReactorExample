@@ -8,6 +8,7 @@
 
 import Alamofire
 import RxSwift
+import RxCocoa
 
 /// Repository 검색 요청.
 class SearchRepositoryService {
@@ -15,26 +16,22 @@ class SearchRepositoryService {
     
     private init() { }
     
-    var response = Observable<[RepositoryResponse]>.just([])
-    
     /// Language로 Repository 검색.
-    func requestSearch(language: String) {
-        self.requestSearch(path: "search/repositories?q=language:\(language)&sort=stars")
+    func requestSearch(language: String) -> Observable<[RepositoryResponse]> {
+        return requestSearch(path: "search/repositories?q=language:\(language)&sort=stars")
     }
     
     /// Repository Name으로 Repository 검색.
-    func requestSearch(repositoryName: String) {
-        self.requestSearch(path: "search/repositories?q=\(repositoryName)")
+    func requestSearch(repositoryName: String) -> Observable<[RepositoryResponse]> {
+        return requestSearch(path: "search/repositories?q=\(repositoryName)")
     }
 }
 
 // MARK: - Internal
 fileprivate extension SearchRepositoryService {
     
-    func requestSearch(path: String) {
-        NetworkBaseService.shared.request(method: .get, path: path)
-        
-        self.response = NetworkBaseService.shared.response
+    func requestSearch(path: String) -> Observable<[RepositoryResponse]> {
+        return NetworkBaseService.shared.request(method: .get, path: path)
             .debug("SearchRepositoryService:requestSearch")
             .map { data -> SearchRepositoryResponse? in
                 do {
