@@ -14,6 +14,8 @@ class RepositorySearchViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    let repositories = PublishSubject<[RepositoryResponse]>()
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
@@ -35,19 +37,22 @@ fileprivate extension RepositorySearchViewController {
             .flatMap { Observable.from(optional: $0) }
             .filter { !$0.isEmpty }
             .subscribe(onNext: { [weak self] text in
-                guard let weakSelf = self else { return }
-                
-                weakSelf.tableView.delegate = nil
-                weakSelf.tableView.dataSource = nil
-                
-                SearchRepositoryService.shared.requestSearch(repositoryName: text)
-                    .debug("RepositorySearchViewController:SearchResult")
-                    .bind(to: weakSelf.tableView.rx.items(cellIdentifier: "SearchResultCell", cellType: UITableViewCell.self)) { indexPath, repository, cell in
-                        cell.textLabel?.text = repository.full_name
-                        cell.detailTextLabel?.text = repository.description
-                    }
-                    .disposed(by: weakSelf.disposeBag)
+                if let weakSelf = self {
+                    SearchRepositoryService.shared.requestSearch(repositoryName: text)
+                        .subscribe(onNext: { repositories in
+                            weakSelf.repositories.onNext(repositories)
+                        })
+                        .disposed(by: weakSelf.disposeBag)
+                }
             })
+            .disposed(by: disposeBag)
+        
+        repositories
+            .debug()
+            .bind(to: tableView.rx.items(cellIdentifier: "SearchResultCell", cellType: UITableViewCell.self)) { indexPath, repository, cell in
+                cell.textLabel?.text = repository.full_name
+                cell.detailTextLabel?.text = repository.description
+            }
             .disposed(by: disposeBag)
     }
     

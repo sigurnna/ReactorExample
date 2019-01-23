@@ -38,6 +38,7 @@ fileprivate extension SearchRepositoryService {
                     return try JSONDecoder().decode(SearchRepositoryResponse.self, from: data)
                 } catch let error {
                     print(error)
+                    print(String(data: data, encoding: .utf8) as Any)
                     return nil
                 }
             }
