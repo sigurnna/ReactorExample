@@ -18,6 +18,7 @@ class NetworkBaseService {
     // Cannot use init.
     private init() { }
     
+    /// Network Error를 무시하는 request.
     func request(method: HTTPMethod, path: String) -> Observable<Data> {
         guard let url = URL(string: baseURL + path) else {
             fatalError("URL is not valid")
@@ -25,20 +26,31 @@ class NetworkBaseService {
         
         return RxAlamofire.request(method, url)
             .debug("NetworkBaseService:request")
-            .do(onNext: { request in
-                print("onNext")
-            }, onError: { error in
-                print("onError")
-            }, onCompleted: {
-                print("onCompleted")
-            }, onSubscribe: {
-                print("onSubscribe")
-            }, onSubscribed: {
-                print("onSubscribed")
-            }, onDispose: {
-                print("onDispose")
-            })
             .responseJSON()
             .flatMapLatest { Observable.from(optional: $0.data) }
+    }
+    
+    /// Network Error를 emit 하는 request.
+    func requestWithEmitError(method: HTTPMethod, path: String) -> Observable<Data> {
+        guard let url = URL(string: baseURL + path) else {
+            fatalError("URL is not valid")
+        }
+        
+        return RxAlamofire.request(method, url)
+            .debug("NetworkBaseService:requestWithEmitError")
+            .responseData()
+            .flatMapLatest { response -> Observable<Data> in
+                if 200 ..< 300 ~= response.0.statusCode {
+                    return Observable.just(response.1)
+                } else {
+                    var userInfo = [String: Any]()
+                    userInfo["url_response"] = response.0   // HTTPURLResponse
+                    userInfo["raw_response"] = String(data: response.1, encoding: .utf8) // Raw Response
+                    
+                    let error = NSError(domain: url.absoluteString, code: response.0.statusCode, userInfo: userInfo)
+                    
+                    return Observable.error(error as Error)
+                }
+            }
     }
 }

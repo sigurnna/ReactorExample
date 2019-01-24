@@ -36,6 +36,7 @@ fileprivate extension RepositorySearchViewController {
         searchBar.rx.text
             .flatMap { Observable.from(optional: $0) }
             .filter { !$0.isEmpty }
+            .throttle(4, scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 if let weakSelf = self {
                     SearchRepositoryService.shared.requestSearch(repositoryName: text)
