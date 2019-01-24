@@ -15,6 +15,9 @@ class RepositoryListViewController: UIViewController, StoryboardView {
     
     var disposeBag = DisposeBag()
     
+    fileprivate var refresh: RefreshableTableHeaderView!
+    fileprivate let triggerRefreshAt: CGFloat = -50
+    
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,13 +34,18 @@ class RepositoryListViewController: UIViewController, StoryboardView {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        refresh = RefreshableTableHeaderView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
+        
+        tableView.tableHeaderView = refresh
+        tableView.contentInset = UIEdgeInsets(top: -50, left: 0, bottom: 0, right: 0)
+        
         // Initial View Controller 라서 직접 의존성을 주입함.
         reactor = RepositoryListReactor()
     }
     
     func bind(reactor: RepositoryListReactor) {
         
-        // State: Repository
+        // Repository 로딩.
         reactor.state.map { $0.repositories }
             .debug()
             .bind(to: tableView.rx.items(cellIdentifier: RepositoryCell.identifier, cellType: RepositoryCell.self)) { indexPath, repository, cell in
@@ -47,7 +55,7 @@ class RepositoryListViewController: UIViewController, StoryboardView {
             }
             .disposed(by: disposeBag)
         
-        // State
+        // Title 변경.
         reactor.state
             .debug("Language Observable", trimOutput: true)
             .subscribeOn(MainScheduler.instance)
@@ -77,6 +85,26 @@ class RepositoryListViewController: UIViewController, StoryboardView {
         languageChangedObservable
             .subscribe(onNext: { [weak self] _ in
                 self?.indicator.startAnimating()
+            })
+            .disposed(by: disposeBag)
+        
+        // Trigger Refresh.
+        tableView.rx.contentOffset
+            .subscribe(onNext: { [weak self] point in
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                if point.y <= weakSelf.triggerRefreshAt {
+                    // 이 상황에서 유저가 터치를 그만둔 경우 refresh occur.
+                }
+                
+                if point.y <= 0 {
+                    print(String(format: "y: %f", point.y))
+                    print(String(format: "progress: %f", point.y / weakSelf.triggerRefreshAt))
+                    
+                    weakSelf.refresh.update(progress: point.y / weakSelf.triggerRefreshAt)
+                }
             })
             .disposed(by: disposeBag)
         
