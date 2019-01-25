@@ -51,19 +51,21 @@ class RefreshableTableHeaderView: UIView {
     /// progress는 0 ~ 1 사이의 값이 전달되어야 함.
     func update(progress: CGFloat) {
         
-        if lastProgress < 1.0 && progress >= 1.0 {
+        if lastProgress < 1.0 && progress >= 1.0 { // Max Progress
             UIView.animate(withDuration: 0.2, animations: { [weak self] in
                 self?.foregroundButton.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-            }, completion: { success in
-                let generator = UIImpactFeedbackGenerator(style: .heavy)
-                generator.impactOccurred()
             })
+            
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
         } else if lastProgress > 1.0 && progress < 1.0 {
             UIView.animate(withDuration: 0.2) { [weak self] in
                 self?.foregroundButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             }
         }
         
+        // Update Path
         let rect = CGRect(x: 0,
                           y: foregroundButton.bounds.height - foregroundButton.bounds.height * min(progress, 1.0),
                           width: foregroundButton.bounds.width,

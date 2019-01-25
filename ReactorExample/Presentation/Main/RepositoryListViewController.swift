@@ -43,6 +43,12 @@ class RepositoryListViewController: UIViewController, StoryboardView {
         reactor = RepositoryListReactor()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        refresh.update(progress: 0)
+    }
+    
     func bind(reactor: RepositoryListReactor) {
         
         // Repository 로딩.
@@ -105,6 +111,12 @@ class RepositoryListViewController: UIViewController, StoryboardView {
                     
                     weakSelf.refresh.update(progress: point.y / weakSelf.triggerRefreshAt)
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.didEndDecelerating
+            .subscribe(onNext: { [weak self] in
+                self?.refresh.update(progress: 0)
             })
             .disposed(by: disposeBag)
         
